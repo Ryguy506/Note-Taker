@@ -2,21 +2,21 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-require('./Develop/Routes/api_routes')(app);
-require('./Develop/Routes/html_routes')(app);
+// Import routes and give the server access to them.
+const apiRoutes = require('./Routes/api_routes');
+const htmlRoutes = require('./Routes/html_routes');
 
-// Express middleware
+// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+// Static files
 app.use(express.static('public'));
-
-
-
+// Routes
+app.use('/api', apiRoutes);
+app.use('/', htmlRoutes);
 
 
 app.listen(PORT, () => {
-    console.log(`server now on port ${PORT}!`);
+    console.log(`server is running on http://localhost:${PORT}`);
     });
-
-
 
